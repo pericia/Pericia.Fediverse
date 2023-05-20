@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Pericia.ActivityPub.Apis;
@@ -15,13 +16,38 @@ public static class ActivityPubExtensions
         services.AddTransient<ActivityPubService>();
 
         services.AddScoped<WebFingerApi>();
+        services.AddScoped<ActivityPubApi>();
 
         return services;
     }
 
-    public static IEndpointRouteBuilder UseActivityPub(this IEndpointRouteBuilder app)
+    public static IApplicationBuilder UseWebFinger(this IApplicationBuilder app)
     {
-        app.MapGet("/.well-known/webfinger", (WebFingerApi api) => api.HandleRequest());
+        app.Map("/.well-known/webfinger", builder =>
+        {
+            builder.Run(context =>
+            {
+                var api = context.RequestServices.GetRequiredService<WebFingerApi>();
+                var result = api.HandleRequest();
+                return result.ExecuteAsync(context);
+            });
+        });
+        
+        return app;
+    }
+    public static IApplicationBuilder UseActivityPub(this IApplicationBuilder app)
+    {
+        app.UseWebFinger();
+
+        app.MapWhen(context => context.Request.Headers["Accept"].Contains("application/activity+json"), builder =>
+        {
+            builder.UseRouting();
+            builder.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGet("actor/{actorId}", (string actorId, ActivityPubApi api) => api.HandleActorRequest(actorId));
+                endpoints.MapGet("actor/{actorId}/{activityId}", () => Results.NotFound());
+            });
+        });
 
         return app;
     }

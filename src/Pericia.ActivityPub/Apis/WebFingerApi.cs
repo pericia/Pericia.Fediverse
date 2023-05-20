@@ -5,7 +5,7 @@ using Pericia.ActivityPub.Model;
 
 namespace Pericia.ActivityPub.Apis;
 
-internal partial class WebFingerApi
+public partial class WebFingerApi
 {
     private readonly HttpContext context;
     private readonly IActivityPubProvider activityPubProvider;
