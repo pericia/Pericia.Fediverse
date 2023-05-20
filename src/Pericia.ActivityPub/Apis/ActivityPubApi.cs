@@ -25,5 +25,16 @@ public class ActivityPubApi
 
         return Results.Ok(actor);
     }
-    
+
+    public IResult HandleActivityRequest(string activityId)
+    {
+        var activity = activityPubProvider.GetActivity(activityId);
+        
+        if (activity == null)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.Ok(activity);
+    }
 }
