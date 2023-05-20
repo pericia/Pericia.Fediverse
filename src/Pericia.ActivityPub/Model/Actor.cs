@@ -13,11 +13,17 @@ public class Actor
     [JsonPropertyName("type")]
     public string Type => "Person";
 
+    [JsonPropertyName("name")]
+    public required string Name { get; set; }
+    
     [JsonPropertyName("preferredUsername")]
     public required string PreferredUsername { get; set; }
 
     [JsonPropertyName("inbox")]
     public required string Inbox { get; set; }
+
+    [JsonPropertyName("outbox")]
+    public required string Outbox { get; set; }
 
     [JsonPropertyName("publicKey")]
     public required PublicKey PublicKey { get; set; }
