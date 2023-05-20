@@ -32,14 +32,15 @@ public static class ActivityPubExtensions
                 return result.ExecuteAsync(context);
             });
         });
-        
+
         return app;
     }
+
     public static IApplicationBuilder UseActivityPub(this IApplicationBuilder app)
     {
         app.UseWebFinger();
 
-        app.MapWhen(context => context.Request.Headers["Accept"].Contains("application/activity+json"), builder =>
+        app.MapWhen(context => context.Request.GetTypedHeaders().Accept.Any(h => h.MediaType == "application/activity+json"), builder =>
         {
             builder.UseRouting();
             builder.UseEndpoints(endpoints =>
