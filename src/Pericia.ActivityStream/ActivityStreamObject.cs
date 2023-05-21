@@ -2,7 +2,7 @@
 
 namespace Pericia.ActivityStream;
 
-public class ActivityStreamObject
+public abstract class ActivityStreamObject
 {
     [JsonPropertyName("@context")]
     public string[] Context => new[]
@@ -15,9 +15,6 @@ public class ActivityStreamObject
 
     [JsonPropertyName("type")]
     public virtual string? Type { get; init; }
-
-    [JsonPropertyName("actor")]
-    public Uri? ActorId { get; init; }
 
     [JsonPropertyName("name")]
     public string? Name { get; init; }
