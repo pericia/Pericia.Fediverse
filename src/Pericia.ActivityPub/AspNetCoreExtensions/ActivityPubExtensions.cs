@@ -36,7 +36,7 @@ public static class ActivityPubExtensions
         return app;
     }
 
-    public static IApplicationBuilder UseActivityPub(this IApplicationBuilder app)
+    public static IApplicationBuilder UseActivityPub(this IApplicationBuilder app, Action<IEndpointRouteBuilder>? configureAdditionalEndpoints)
     {
         app.UseWebFinger();
 
@@ -45,8 +45,26 @@ public static class ActivityPubExtensions
             builder.UseRouting();
             builder.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("actor/{actorId}", (string actorId, ActivityPubApi api) => api.HandleActorRequest(actorId));
-                endpoints.MapGet("actor/{actorId}/{activityId}", () => Results.NotFound());
+                endpoints.MapGet("actor/{actorId}",
+                    (string actorId, ActivityPubApi api) => api.HandleActorRequest(actorId)
+                );
+
+                endpoints.MapGet("actor/{actorId}/outbox",
+                    (string actorId, ActivityPubApi api) => api.HandleActorRequest(actorId)
+                );
+                
+                endpoints.MapPost("actor/{actorId}/inbox",
+                    (string actorId, ActivityPubApi api) => api.HandleActorRequest(actorId)
+                );
+                
+                endpoints.MapGet("actor/{actorId}/notes/{objectId}",
+                    (string actorId, string objectId, ActivityPubApi api) => api.HandleObjectRequest(actorId, objectId)
+                );
+
+                if (configureAdditionalEndpoints != null)
+                {
+                    configureAdditionalEndpoints(endpoints);
+                }
             });
         });
 

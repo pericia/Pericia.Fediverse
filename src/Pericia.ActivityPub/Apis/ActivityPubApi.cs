@@ -26,15 +26,25 @@ public class ActivityPubApi
         return Results.Ok(actor);
     }
 
-    public IResult HandleActivityRequest(string activityId)
+    public IResult HandleInboxRequest(string actorId)
     {
-        var activity = activityPubProvider.GetActivity(activityId);
+        return Results.Ok();
+    }
+    
+    public IResult HandleOutboxRequest(string actorId)
+    {
+        return Results.Ok();
+    }
+
+    public IResult HandleObjectRequest(string actorId, string objectId)
+    {
+        var @object = activityPubProvider.GetObject(actorId, objectId);
         
-        if (activity == null)
+        if (@object == null)
         {
             return Results.NotFound();
         }
 
-        return Results.Ok(activity);
+        return Results.Ok(@object);
     }
 }

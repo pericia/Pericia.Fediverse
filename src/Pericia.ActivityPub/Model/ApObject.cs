@@ -2,7 +2,7 @@
 
 namespace Pericia.ActivityPub.Model;
 
-public class Activity
+public class ApObject
 {
     [JsonPropertyName("@context")]
     public string[] Context => new[]

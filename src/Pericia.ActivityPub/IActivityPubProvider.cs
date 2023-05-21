@@ -6,5 +6,5 @@ public interface IActivityPubProvider
 {
     Actor? GetActor(string actorId);
 
-    Activity? GetActivity(string activityId);
+    ApObject? GetObject(string actorId, string objectId);
 }
