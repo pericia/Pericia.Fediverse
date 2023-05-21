@@ -20,5 +20,5 @@ public class WebFingerLink
     public required string Type { get; set; }
 
     [JsonPropertyName("href")]
-    public required string Href { get; set; }
+    public required Uri Href { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿using Pericia.ActivityPub.Model;
+﻿using Pericia.ActivityStream;
 
 namespace Pericia.ActivityPub;
 
@@ -6,5 +6,5 @@ public interface IActivityPubProvider
 {
     Actor? GetActor(string actorId);
 
-    ApObject? GetObject(string actorId, string objectId);
+    ActivityStreamObject? GetObject(string actorId, string objectId);
 }

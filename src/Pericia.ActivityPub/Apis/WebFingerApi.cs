@@ -23,14 +23,14 @@ public partial class WebFingerApi
         {
             throw new NotSupportedException();
         }
-        
+
         if (!context.Request.QueryString.HasValue)
         {
             return Results.NotFound();
         }
-        
+
         var resource = context.Request.QueryString.Value;
-        var account = GetAccount(context, resource);
+        var account = GetAccount(resource);
 
         if (account == null)
         {
@@ -39,13 +39,12 @@ public partial class WebFingerApi
 
         return Results.Ok(account);
     }
-    
-    
+
 
     [GeneratedRegex(@"\?resource=(acct:(.+)@(.+))")]
     private static partial Regex ResourceRegex();
 
-    private WebFingerAccount? GetAccount(HttpContext context, string resource)
+    private WebFingerAccount? GetAccount(string resource)
     {
         var match = ResourceRegex().Match(resource);
         if (!match.Success)
@@ -62,7 +61,7 @@ public partial class WebFingerApi
 
         var actorId = match.Groups[2].Value;
         var actor = activityPubProvider.GetActor(actorId);
-        if (actor == null)
+        if (actor == null || actor.Id == null)
         {
             return null;
         }
