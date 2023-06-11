@@ -6,5 +6,5 @@ public interface IActivityPubProvider
 {
     Actor? GetActor(string actorId);
 
-    ActivityStreamObject? GetObject(string actorId, string objectId);
+    CoreObject? GetObject(string actorId, string objectId);
 }

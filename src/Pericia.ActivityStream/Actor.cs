@@ -2,7 +2,7 @@
 
 namespace Pericia.ActivityStream;
 
-public class Actor : ActivityStreamObject
+public class Actor : CoreObject
 {
     public override string? Type => "Person";
 

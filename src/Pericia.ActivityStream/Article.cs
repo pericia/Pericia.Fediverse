@@ -1,8 +1,10 @@
 ﻿namespace Pericia.ActivityStream;
 
-public class Note : CoreObject
+public class Article : CoreObject
 {
-    public override string? Type => "Note";
+    public override string? Type => "Article";
+
+    public string? Content { get; set; }
 
     public IEnumerable<string> To => new[] { "https://www.w3.org/ns/activitystreams#Public" };
 }

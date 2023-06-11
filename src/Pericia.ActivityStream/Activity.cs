@@ -2,7 +2,7 @@
 
 namespace Pericia.ActivityStream;
 
-public class Activity : ActivityStreamObject
+public class Activity : CoreObject
 {
     public override string? Type { get; init; }
 
@@ -10,5 +10,5 @@ public class Activity : ActivityStreamObject
     public Uri? ActorId { get; init; }
 
     [JsonPropertyName("object")]
-    public ActivityStreamObject? Object { get; init; }
+    public CoreObject? Object { get; init; }
 }

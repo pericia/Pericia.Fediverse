@@ -2,7 +2,7 @@
 
 namespace Pericia.ActivityStream;
 
-public abstract class ActivityStreamObject
+public abstract class CoreObject
 {
     [JsonPropertyName("@context")]
     public string[] Context => new[]
