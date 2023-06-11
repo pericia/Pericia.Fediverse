@@ -50,11 +50,11 @@ public static class ActivityPubExtensions
                 );
 
                 endpoints.MapGet("actor/{actorId}/outbox",
-                    (string actorId, ActivityPubApi api) => api.HandleActorRequest(actorId)
+                    (string actorId, ActivityPubApi api) => api.HandleOutboxRequest(actorId)
                 );
                 
                 endpoints.MapPost("actor/{actorId}/inbox",
-                    (string actorId, ActivityPubApi api) => api.HandleActorRequest(actorId)
+                    (string actorId, ActivityPubApi api) => api.HandleInboxRequest(actorId)
                 );
                 
                 endpoints.MapGet("actor/{actorId}/notes/{objectId}",
