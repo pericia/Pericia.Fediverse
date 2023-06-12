@@ -5,7 +5,10 @@ namespace Pericia.ActivityStream;
 public class Actor : CoreObject
 {
     public override string? Type => "Person";
-
+    
+    [JsonPropertyName("preferredUsername")]
+    public string? PreferredUsername { get; set; }
+    
     [JsonPropertyName("inbox")]
     public Uri? Inbox { get; set; }
 

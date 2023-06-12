@@ -40,7 +40,7 @@ public static class ActivityPubExtensions
     {
         app.UseWebFinger();
 
-        app.MapWhen(context => context.Request.GetTypedHeaders().Accept.Any(h => h.MediaType == "application/activity+json"), builder =>
+        app.MapWhen(context => context.Request.GetTypedHeaders().Accept.Any(h => h.MediaType == "application/ld+json" || h.MediaType == "application/activity+json"), builder =>
         {
             builder.UseRouting();
             builder.UseEndpoints(endpoints =>
@@ -52,11 +52,11 @@ public static class ActivityPubExtensions
                 endpoints.MapGet("actor/{actorId}/outbox",
                     (string actorId, ActivityPubApi api) => api.HandleOutboxRequest(actorId)
                 );
-                
+
                 endpoints.MapPost("actor/{actorId}/inbox",
                     (string actorId, ActivityPubApi api) => api.HandleInboxRequest(actorId)
                 );
-                
+
                 endpoints.MapGet("actor/{actorId}/notes/{objectId}",
                     (string actorId, string objectId, ActivityPubApi api) => api.HandleObjectRequest(actorId, objectId)
                 );
